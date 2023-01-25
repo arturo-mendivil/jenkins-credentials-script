@@ -1,3 +1,4 @@
 **/.DS_Store
 output/*
 jenkins-credentials-decryptor
+go-decrypt-jenkins-darwin-amd64

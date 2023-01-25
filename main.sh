@@ -74,6 +74,11 @@ get_server_files(){
     scp -o ConnectTimeout=5 -i $pem_file $user@$ip:/var/lib/jenkins/secrets/hudson.util.Secret "$output_folder/." \
     || { echo "[ERROR] Connection timed out, please check your inputs."; exit 1; }
     echo "[INFO] hudson.util.Secret saved!"
+
+    echo "[INFO] Getting com.cloudbees.plugins.credentials.SecretBytes.KEY from server..."
+    scp -o ConnectTimeout=5 -i $pem_file $user@$ip:/var/lib/jenkins/secrets/com.cloudbees.plugins.credentials.SecretBytes.KEY "$output_folder/." \
+    || { echo "[ERROR] Connection timed out, please check your inputs."; exit 1; }
+    echo "[INFO] com.cloudbees.plugins.credentials.SecretBytes.KEY saved!"
 }
 
 get_configs_files(){
@@ -94,9 +99,7 @@ get_configs_files(){
     done
     echo "[INFO] End config task."
 }
-# --------------------------------------------
-# Validation block: begin
-# --------------------------------------------
+
 validate_inputs(){
     if [[ -z $pem_file ]]; then
         script_usage
@@ -113,9 +116,6 @@ validate_inputs(){
         exit
     fi
 }
-# --------------------------------------------
-# Validation block: end
-# --------------------------------------------
 
 # --------------------------------------------
 #  process: begin
